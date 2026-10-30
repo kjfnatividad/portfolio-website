@@ -3,8 +3,8 @@
    Desktop styles remain unchanged.
 
    Mobile look (<= 600px), matched to the reference screenshot:
-   - Header: avatar on the left beside the name (+ blue check on ONE line) and location;
-     the role line and the 3 buttons run full width below, each on ONE line
+   - Header: avatar on the left; on its right, stacked: name + blue check (one line),
+     location, role line (one line), then Download / Send Email / Call Me (one line)
    - Dark-mode pill button fixed at the top right
    - Header is NOT boxed: it floats above the first card with a small gap
    - First card (Services): big rounded corners, dashed divider under the title,
@@ -77,25 +77,28 @@ a {
 @media (max-width: 600px) {
   /* ---- Tweak these to resize the mobile header ---- */
   :root {
-    --m-avatar: 108px;     /* profile picture size */
-    --m-name: 0.95rem;     /* name */
-    --m-loc: 0.65rem;      /* location line */
-    --m-role: 0.75rem;     /* typing line */
-    --m-btn: 0.55rem;      /* Download Resume / Send Email / Light Mode text */
+    --m-avatar: 90px;      /* profile picture size */
+    --m-gap: 14px;         /* space between picture and text */
+    --m-pad: 28px;         /* left/right page padding */
+    --m-name: 0.95rem;     /* max name size */
+    --m-loc: 0.65rem;      /* max location size */
+    --m-role: 0.75rem;     /* max role line size */
+    --m-btn: 0.6rem;       /* max button / Light Mode text size */
     --m-card-radius: 20px; /* card corner roundness */
+    /* width left for the text column; all one-line texts scale to fit it */
+    --m-hero: calc(100vw - 2 * var(--m-pad) - var(--m-avatar) - var(--m-gap));
   }
 
   .container {
-    padding: 28px;
+    padding: var(--m-pad);
     margin-top: 23px;
   }
 
-  /* ===== HEADER ===== */
+  /* ===== HEADER: avatar left, text column right ===== */
   .container > header {
     display: grid;
     grid-template-columns: var(--m-avatar) minmax(0, 1fr);
-    column-gap: 20px;
-    row-gap: 0;
+    column-gap: var(--m-gap);
     align-items: center;
     width: 100%;
     margin: 0 0 10px;
@@ -106,19 +109,11 @@ a {
     background: none;
   }
 
-  /* .hero disappears so its children can be placed on the header grid */
-  .container > header .hero {
-    display: contents;
-  }
-
-  /* Avatar: left, spans the name + location rows */
   .container > header .avatar {
-    grid-column: 1;
-    grid-row: 1 / span 2;
     width: var(--m-avatar) !important;
     height: var(--m-avatar) !important;
     min-width: var(--m-avatar);
-    border-radius: 18px;
+    border-radius: 16px;
     overflow: hidden;
   }
 
@@ -129,18 +124,21 @@ a {
     object-fit: cover;
   }
 
-  /* GREEN: name + blue check always on ONE line */
+  .container > header .hero {
+    display: block;
+    min-width: 0;
+    text-align: left;
+  }
+
+  /* Name + blue check: ONE line */
   .container > header .hero h1 {
-    grid-column: 2;
-    grid-row: 1;
-    align-self: end;
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
     gap: 6px;
     min-width: 0;
     white-space: nowrap;
-    font-size: clamp(0.62rem, 2.7vw, var(--m-name)) !important;
+    font-size: clamp(0.55rem, calc(var(--m-hero) / 22), var(--m-name)) !important;
     line-height: 1.25 !important;
     letter-spacing: -0.02em;
     text-align: left;
@@ -152,48 +150,43 @@ a {
     height: 14px !important;
   }
 
+  /* Location */
   .container > header .sub.location {
-    grid-column: 2;
-    grid-row: 2;
-    align-self: start;
     margin-top: 5px;
-    font-size: var(--m-loc) !important;
+    font-size: clamp(0.5rem, calc(var(--m-hero) / 24), var(--m-loc)) !important;
     line-height: 1.4 !important;
     text-align: left;
   }
 
-  /* YELLOW: role / typing line on ONE line, full width */
+  /* Role / typing line: ONE line, just under the location */
   .container > header .sub.role {
-    grid-column: 1 / -1;
-    grid-row: 3;
-    margin-top: 14px;
+    margin-top: 8px;
     min-height: 1.4em;
     white-space: nowrap;
-    font-size: clamp(0.55rem, 2.8vw, var(--m-role)) !important;
+    font-size: clamp(0.45rem, calc(var(--m-hero) / 29), var(--m-role)) !important;
     font-weight: 400;
     line-height: 1.4 !important;
     text-align: left;
   }
 
-  /* RED: Download Resume, Send Email, Call Me on ONE line, full width */
+  /* Download Resume + Send Email + Call Me: ONE line, under the role */
   .container > header .badges {
-    grid-column: 1 / -1;
-    grid-row: 4;
     display: flex;
     flex-wrap: nowrap;
     justify-content: flex-start;
-    gap: 6px !important;
-    margin-top: 14px;
+    gap: 0.5em !important;
+    margin-top: 10px;
+    font-size: clamp(0.45rem, calc(var(--m-hero) / 29), var(--m-btn));
   }
 
-  /* Pill buttons */
+  /* Pill buttons (sizes in em so they shrink together with the font) */
   .container > header .badges .btn {
     flex: 0 0 auto;
     min-height: 0;
-    padding: 4px 9px !important;
-    font-size: clamp(0.5rem, 2.4vw, var(--m-btn)) !important;
+    padding: 0.35em 0.75em !important;
+    font-size: 1em !important;
     line-height: 1.4;
-    gap: 6px;
+    gap: 0.4em;
     border: 1.5px solid var(--btn-border);
     border-radius: 999px;
     white-space: nowrap;
@@ -204,7 +197,7 @@ a {
     border: 0;
   }
 
-  /* Call Me is visible again */
+  /* Call Me is visible */
   .container > header .badges a[href^="tel:"] {
     display: inline-flex !important;
   }
@@ -459,19 +452,9 @@ a {
 /* Small phones */
 @media (max-width: 380px) {
   :root {
-    --m-avatar: 88px;
-    --m-name: 0.9rem;
-    --m-loc: 0.6rem;
-    --m-role: 0.7rem;
-    --m-btn: 0.5rem;
-  }
-
-  .container {
-    padding: 20px;
-  }
-
-  .container > header {
-    column-gap: 14px;
+    --m-avatar: 80px;
+    --m-gap: 12px;
+    --m-pad: 20px;
   }
 
   .card {
