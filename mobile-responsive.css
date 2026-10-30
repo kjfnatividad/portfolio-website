@@ -1,7 +1,15 @@
-
 /* Mobile-responsive layer for Kristine Joy Fontanilla Natividad's portfolio.
    Load AFTER main.css and gallery-lightbox.css.
-   Desktop styles remain unchanged. */
+   Desktop styles remain unchanged.
+
+   Mobile look (<= 600px), matched to the reference screenshot:
+   - Header sits in a row: square avatar on the left, text + pill buttons on the right
+   - Dark-mode pill button fixed at the top right
+   - Header is NOT boxed: it floats above the first card with a small gap
+   - First card: big rounded corners, dashed divider under the title,
+     4 thumbnails in one row
+
+   Quick tweaks: change the --m-* values in the :root block below. */
 
 html {
   -webkit-text-size-adjust: 100%;
@@ -66,62 +74,140 @@ a {
 }
 
 @media (max-width: 600px) {
+  /* ---- Tweak these to resize the mobile header ---- */
+  :root {
+    --m-avatar: 108px;     /* profile picture size */
+    --m-name: 0.95rem;     /* name */
+    --m-loc: 0.65rem;      /* location line */
+    --m-role: 0.75rem;     /* typing line */
+    --m-btn: 0.55rem;      /* Download Resume / Send Email / Light Mode text */
+    --m-card-radius: 20px; /* card corner roundness */
+  }
+
   .container {
-    padding: 14px;
-    margin-top: 8px;
+    padding: 28px;
+    margin-top: 23px;
   }
 
-  header {
+  /* ===== HEADER: row layout, no box ===== */
+  .container > header {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
-    gap: 14px;
+    justify-content: flex-start;
+    gap: 20px;
     width: 100%;
-    margin: 0 0 14px;
-    padding: 46px 4px 8px;
-    text-align: center;
+    margin: 0 0 10px;
+    padding: 0;
+    text-align: left;
+    border: 0;
+    border-radius: 0;
+    background: none;
   }
 
-  .avatar {
-    width: 104px !important;
-    height: 104px !important;
-    min-width: 104px;
-    font-size: 22px !important;
+  .container > header .avatar {
+    flex: 0 0 var(--m-avatar);
+    width: var(--m-avatar) !important;
+    height: var(--m-avatar) !important;
+    min-width: var(--m-avatar);
     border-radius: 18px;
+    overflow: hidden;
   }
 
-  .hero {
+  .container > header .avatar img {
+    display: block;
     width: 100%;
-    min-width: 0;
-    text-align: center;
+    height: 100%;
+    object-fit: cover;
   }
 
-  .hero h1,
-  h1 {
+  .container > header .hero {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+    text-align: left;
+  }
+
+  .container > header .hero h1 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 6px;
     max-width: 100%;
-    font-size: clamp(1.35rem, 6vw, 1.8rem) !important;
+    font-size: var(--m-name) !important;
     line-height: 1.25 !important;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.02em;
+    text-align: left;
     overflow-wrap: anywhere;
+  }
+
+  .container > header .hero h1 img {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  .container > header .sub.location {
+    margin-top: 5px;
+    font-size: var(--m-loc) !important;
+    line-height: 1.4 !important;
+    text-align: left;
+  }
+
+  .container > header .sub.role {
+    margin-top: 20px;
+    min-height: 1.4em;
+    font-size: var(--m-role) !important;
+    font-weight: 400;
+    line-height: 1.4 !important;
+    text-align: left;
+  }
+
+  .container > header .badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 6px !important;
+    margin-top: 16px;
+  }
+
+  /* Pill buttons */
+  .container > header .badges .btn {
+    min-height: 0;
+    padding: 4px 9px !important;
+    font-size: var(--m-btn) !important;
+    line-height: 1.4;
+    gap: 6px;
+    border: 1.5px solid var(--btn-border);
+    border-radius: 999px;
+    white-space: nowrap;
     justify-content: center;
   }
 
-  .hero h1 img {
-    width: 18px !important;
-    height: 18px !important;
+  .container > header .badges .btn.primary {
+    border: 0;
   }
 
-  .sub.location {
-    margin-top: 8px;
-    font-size: 0.88rem !important;
-    line-height: 1.45;
+  /* "Call Me" is hidden on mobile */
+  .container > header .badges a[href^="tel:"] {
+    display: none !important;
   }
 
-  .sub.role {
-    margin-top: 12px;
-    font-size: 0.98rem !important;
-    line-height: 1.5;
+  /* Dark-mode pill, fixed top right */
+  #darkToggle {
+    position: fixed !important;
+    top: 11px !important;
+    right: 14px !important;
+    left: auto !important;
+    z-index: 10000 !important;
+    min-height: 0;
+    padding: 4px 9px !important;
+    font-size: var(--m-btn) !important;
+    line-height: 1.4;
+    border-width: 1.5px;
+    border-radius: 999px;
+    background: var(--bg);
+    box-shadow: none;
   }
 
   hr {
@@ -129,10 +215,12 @@ a {
     margin-top: 24px;
   }
 
+  /* ===== MAIN / CARDS ===== */
   main {
     display: grid;
     grid-template-columns: minmax(0, 1fr) !important;
     gap: 10px !important;
+    margin-top: 0;
   }
 
   main > section,
@@ -148,9 +236,9 @@ a {
   .card {
     width: 100%;
     max-width: none !important;
-    margin: 12px 0 0;
-    padding: 16px;
-    border-radius: 13px;
+    margin: 14px 0 0;
+    padding: 20px;
+    border-radius: var(--m-card-radius);
     overflow-wrap: anywhere;
   }
 
@@ -172,17 +260,9 @@ a {
     line-height: 1.65;
   }
 
-  .badges {
-    display: flex;
-    justify-content: center;
-    gap: 8px !important;
-    margin-top: 14px;
-  }
-
-  .badges .btn,
-  .badges a,
-  .badges button,
-  .btn {
+  /* Buttons outside the header keep a comfortable tap size */
+  .card .btn,
+  .contact-item .btn {
     max-width: 100%;
     min-height: 40px;
     padding: 9px 12px !important;
@@ -193,10 +273,6 @@ a {
     justify-content: center;
   }
 
-  .badges a[href^="tel:"] {
-    display: inline-flex !important;
-  }
-
   .contact-item {
     min-width: 0;
     flex-wrap: wrap;
@@ -205,8 +281,6 @@ a {
 
   .contact-item .btn {
     width: auto;
-    max-width: 100%;
-    font-size: 0.82rem !important;
     padding: 9px 10px !important;
     overflow-wrap: anywhere;
   }
@@ -216,8 +290,7 @@ a {
   }
 
   .stack,
-  .chips,
-  .badges {
+  .chips {
     flex-wrap: wrap;
   }
 
@@ -250,6 +323,46 @@ a {
     object-fit: contain;
   }
 
+  /* ===== FIRST CARD: 4 thumbnails in one row ===== */
+  .carousel-track {
+    justify-content: flex-start;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .carousel-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* exactly 4 tiles fit the card width; extra tiles scroll sideways */
+  .carousel-track a {
+    flex: 0 0 calc((100% - 24px) / 4);
+    min-width: 0;
+  }
+
+  .carousel-track img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+
+  .carousel-track img:hover {
+    transform: none;
+  }
+
+  .carousel-track a span {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.62rem;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  /* ===== Auto-scrolling image strip ===== */
   .image-list {
     gap: 10px;
     padding: 8px 0;
@@ -269,41 +382,6 @@ a {
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
-
-  .carousel-track {
-    justify-content: flex-start;
-    gap: 10px;
-  }
-
-  .carousel-track a {
-    flex: 0 0 82%;
-    min-width: 0;
-  }
-
-  .carousel-track img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-  }
-
-  .carousel-track a span {
-    font-size: 0.9rem;
-    line-height: 1.4;
-  }
-
-  #darkToggle {
-    position: fixed !important;
-    top: 10px !important;
-    right: 10px !important;
-    left: auto !important;
-    z-index: 10000 !important;
-    min-height: 38px;
-    padding: 8px 11px !important;
-    font-size: 0.78rem !important;
-    border-radius: 10px;
-    background: var(--card);
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
   }
 
   .floater-messenger {
@@ -359,25 +437,26 @@ a {
   }
 }
 
-@media (max-width: 360px) {
+/* Small phones */
+@media (max-width: 380px) {
+  :root {
+    --m-avatar: 88px;
+    --m-name: 0.9rem;
+    --m-loc: 0.6rem;
+    --m-role: 0.7rem;
+    --m-btn: 0.5rem;
+  }
+
   .container {
-    padding: 10px;
+    padding: 20px;
+  }
+
+  .container > header {
+    gap: 14px;
   }
 
   .card {
-    padding: 13px;
-  }
-
-  .hero h1,
-  h1 {
-    font-size: 1.25rem !important;
-  }
-
-  .badges .btn,
-  .badges a,
-  .badges button,
-  .btn {
-    font-size: 0.78rem !important;
+    padding: 16px;
   }
 
   .image-card {
@@ -398,120 +477,5 @@ a {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-  }
-}
-
-/* Mobile-only: connect the profile header and first Services card. */
-@media (max-width: 600px) {
-  .container > header {
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 14px;
-    margin: 8px 0 0;
-    padding: 48px 14px 20px;
-    text-align: left;
-    border: 1px solid var(--border, #dedede);
-    border-bottom: 0;
-    border-radius: 18px 18px 0 0;
-    background: var(--card, #fff);
-  }
-
-  .container > header .avatar {
-    flex: 0 0 86px;
-    width: 86px !important;
-    height: 100px !important;
-    min-width: 86px;
-    overflow: hidden;
-    border-radius: 14px;
-  }
-
-  .container > header .avatar img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .container > header .hero {
-    flex: 1 1 auto;
-    width: auto;
-    min-width: 0;
-    text-align: left;
-  }
-
-  .container > header .hero h1 {
-    justify-content: flex-start;
-    text-align: left;
-    font-size: clamp(1rem, 4.2vw, 1.3rem) !important;
-    line-height: 1.25 !important;
-  }
-
-  .container > header .sub.location,
-  .container > header .sub.role {
-    text-align: left;
-  }
-
-  .container > header .badges {
-    justify-content: flex-start;
-    gap: 6px !important;
-  }
-
-  .container > header .badges .btn {
-    min-height: 34px;
-    padding: 7px 9px !important;
-    font-size: 0.72rem !important;
-  }
-
-  .container > main {
-    margin-top: 0;
-    gap: 10px !important;
-  }
-
-  .container > main > section.allcard {
-    margin-top: 0;
-    padding-top: 0;
-  }
-
-  .container > main > section.allcard > article.card:first-child {
-    margin-top: 0;
-    border: 1px solid var(--border, #dedede);
-    border-top: 0;
-    border-radius: 0 0 18px 18px;
-    padding: 8px 16px 18px;
-    background: var(--card, #fff);
-    box-shadow: none;
-  }
-
-  .container > main > section.allcard > article.card:first-child .section-title {
-    margin-top: 0;
-  }
-
-  .container > main > section.allcard > article.card:first-child .carousel-track {
-    gap: 10px;
-  }
-
-  .container > main > section.allcard > article.card:first-child .carousel-track a {
-    flex: 0 0 76%;
-  }
-}
-
-@media (max-width: 380px) {
-  .container > header {
-    gap: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-
-  .container > header .avatar {
-    flex-basis: 74px;
-    width: 74px !important;
-    min-width: 74px;
-    height: 88px !important;
-  }
-
-  .container > header .badges .btn {
-    font-size: 0.68rem !important;
-    padding: 6px 7px !important;
   }
 }
