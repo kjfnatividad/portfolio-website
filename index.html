@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <!-- EDIT: title, description, keywords -->
+  <title>Kristine Joy Fontanilla Natividad | Civil Engineer Graduate Portfolio</title>
+  <meta name="description" content="Portfolio of Kristine Joy Fontanilla Natividad, a Civil Engineering graduate specializing in structural design and construction management." />
+  <meta name="keywords" content="Kristine Joy Fontanilla Natividad, Portfolio, Civil Engineer, Structural Design, AutoCAD, Construction">
+  <link rel="icon" type="image/png" href="img/profile.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="main.css" rel="stylesheet">
+  <link href="gallery-lightbox.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- EDIT: put your GitHub Pages link -->
+  <link rel="canonical" href="https://yourusername.github.io/" />
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" as="style">
+
+  
+<style>
+  /* Project details popup */
+  .project-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .project-modal.active {
+    display: flex;
+  }
+
+  .project-modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(4px);
+  }
+
+  .project-modal-box {
+    position: relative;
+    z-index: 1;
+    width: min(650px, 100%);
+    max-height: 85vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    /* Hide scrollbar but retain scrolling */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    padding: 28px;
+    border-radius: 16px;
+
+    /* Default theme colors */
+    background: var(--card, #ffffff);
+    color: var(--text, #222222);
+
+    box-shadow: 0 18px 55px rgba(0, 0, 0, 0.35);
+    animation: projectModalOpen 0.25s ease;
+  }
+
+  .project-modal-box::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Project details inherit the popup text color */
+  .project-modal-box #projectModalBody,
+  .project-modal-box #projectModalBody h1,
+  .project-modal-box #projectModalBody h2,
+  .project-modal-box #projectModalBody h3,
+  .project-modal-box #projectModalBody h4,
+  .project-modal-box #projectModalBody p,
+  .project-modal-box #projectModalBody li,
+  .project-modal-box #projectModalBody span,
+  .project-modal-box #projectModalBody strong {
+    color: inherit;
+  }
+
+  /* Explicit text colors for Documentation Blog project details.
+     Uses the website's darkToggle button state, managed in JavaScript below. */
+  body:not(.dark-mode) .project-modal-box {
+    background: #ffffff;
+    color: #222222;
+  }
+
+  body.dark-mode .project-modal-box {
+    background: #202020;
+    color: #f5f5f5;
+  }
+
+  /* Make nested project text follow the selected theme */
+  body:not(.dark-mode) .project-modal-box #projectModalBody,
+  body:not(.dark-mode) .project-modal-box #projectModalBody h1,
+  body:not(.dark-mode) .project-modal-box #projectModalBody h2,
+  body:not(.dark-mode) .project-modal-box #projectModalBody h3,
+  body:not(.dark-mode) .project-modal-box #projectModalBody h4,
+  body:not(.dark-mode) .project-modal-box #projectModalBody p,
+  body:not(.dark-mode) .project-modal-box #projectModalBody li,
+  body:not(.dark-mode) .project-modal-box #projectModalBody span,
+  body:not(.dark-mode) .project-modal-box #projectModalBody strong {
+    color: #222222;
+  }
+
+  body.dark-mode .project-modal-box #projectModalBody,
+  body.dark-mode .project-modal-box #projectModalBody h1,
+  body.dark-mode .project-modal-box #projectModalBody h2,
+  body.dark-mode .project-modal-box #projectModalBody h3,
+  body.dark-mode .project-modal-box #projectModalBody h4,
+  body.dark-mode .project-modal-box #projectModalBody p,
+  body.dark-mode .project-modal-box #projectModalBody li,
+  body.dark-mode .project-modal-box #projectModalBody span,
+  body.dark-mode .project-modal-box #projectModalBody strong {
+    color: #f5f5f5;
+  }
+
+  /* Links remain visible in both themes */
+  .project-modal-box a {
+    color: #b88600;
+    text-decoration: underline;
+  }
+
+  body.dark-mode .project-modal-box a {
+    color: #e6b800;
+  }
+
+  /* Close button */
+  .project-modal-close {
+    position: sticky;
+    top: 0;
+    float: right;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    margin: -12px -12px 8px 12px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(128, 128, 128, 0.22);
+    color: inherit;
+    font-size: 27px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  .project-modal-close:hover,
+  .project-modal-close:focus-visible {
+    background: #e6b800;
+    color: #111111;
+  }
+
+  .project-modal-box h2 {
+    margin: 0 35px 18px 0;
+  }
+
+  .project-modal-box h3 {
+    margin: 20px 0 8px;
+  }
+
+  .project-modal-box p {
+    margin: 0 0 12px;
+    line-height: 1.7;
+  }
+
+  
+/* Customize project image size when expanded */
+.project-modal-box img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: 380px;
+  object-fit: contain;
+  border-radius: 10px;
+  margin: 0 auto 20px;
+}
+
+
+  body.project-modal-open {
+    overflow: hidden;
+  }
+
+  .project-modal-content[hidden] {
+    display: none !important;
+  }
+
+  .project[onclick] {
+    cursor: pointer;
+  }
+
+  @keyframes projectModalOpen {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .project-modal {
+      padding: 12px;
+    }
+
+    .project-modal-box {
+      padding: 22px;
+      max-height: 90vh;
+    }
+  }
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header -->
+  <header>
+    <div class="avatar">
+      <img src="img/profile.png" alt="Profile picture" loading="lazy">
+    </div>
+
+    <div class="hero">
+      <h1>
+        Kristine Joy Fontanilla Natividad
+        <img src="img/check.png" alt="Verified" style="width:25px; height:25px; object-fit:contain;"/>
+      </h1>
+
+      <div class="sub location">
+        <i class="fa-solid fa-location-dot"></i> San Nicolas, Pangasinan, Philippines 2447
+      </div>
+      <!-- Typing text: first letter here, the rest is in js/script.js -->
+      <div class="sub role">
+        <span class="first-letter">C</span><span class="typing"></span>
+      </div>
+
+      <div class="badges">
+        <a class="btn primary" href="Resume.pdf" download>
+          <i class="fa-solid fa-file-arrow-down"></i> Download Resume
+        </a>
+        <a class="btn" href="mailto:kjfnnatividad@gmail.com">
+          <i class="fa-solid fa-envelope"></i> Send Email
+        </a>
+        <a class="btn" href="tel:09000000000">
+          <i class="fa-solid fa-phone"></i> Call Me
+        </a>
+      </div>
+    </div>
+
+    <button id="darkToggle" class="btn">
+      <i class="fa-solid fa-sun"></i> Light Mode
+    </button>
+  </header>
+
+  <main>
+    <section class="allcard">
+
+      <!-- Gallery -->
+      <article class="card">
+        <div class="section-title"><h2><strong>My Services</strong></h2></div>
+        <div class="experience-item">
+          <div class="carousel">
+            <div class="carousel-track">
+              <a href="fullscreen.html?img=img/design1.png"><img src="img/design1.png" alt="Construction project coordination"><span>Construction Project Coordination</span></a>
+              <a href="fullscreen.html?img=img/design2.png"><img src="img/design2.png" alt="Project document management"><span>Project Document Management</span></a>
+              <a href="fullscreen.html?img=img/design3.png"><img src="img/design3.png" alt="Construction administrative support"><span>Administrative Support</span></a>
+              <a href="fullscreen.html?img=img/design4.png"><img src="img/design4.png" alt="Basic Quantity and Cost Estimates"><span>Basic Quantity and Cost Estimates</span></a>
+            </div>
+            <div class="carousel-dots"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- About -->
+      <article class="card">
+        <div class="section-title"><h2><strong>About</strong></h2></div>
+        <p class="lead">Motivated and detail-oriented Civil Engineering graduate majoring in Structural Engineering with strong communication, organizational, and problem-solving skills. Experienced in handling administrative tasks, customer service, stakeholder coordination, and team collaboration through academic projects and internship experience. Adaptable, flexible learner, and committed to delivering quality work while continuously developing professional skills in a multicultural workplace. </p>
+      </article>
+
+      <!-- Experience -->
+      <article class="card">
+        <div class="section-title"><h2><strong>Experience</strong></h2></div>
+        <div class="experience-item">
+          <h3><strong>Construction Project Management - Internship Training</strong></h3>
+          <h3><i>City Buildings and Architecture Office (CBAO) – Baguio City, PH</i></h3>
+          <p class="experience-text" style="margin-bottom: 6px;"></p>
+          <div class="meta"><i class="fa-regular fa-calendar-days"></i> March 2026 – May 2026</div>
+          <ul style="margin-top:8px; color:var(--muted); font-size:14px; line-height:1.6; margin-left: 20px">
+            <li>Supported construction permit processing and engineering documentation by assisting engineers and professionals with project records and administrative requirements.</li>
+            <li>Organized, recorded, and properly filed reviewed construction and engineering documents, including building plans, permits, certificates, and technical records, for submission and safekeeping at the Records Office.</li>
+            <li>Maintained accurate records, registers, spreadsheets, and tracking systems to support document control, records retrieval, project monitoring, and regulatory compliance.</li>
+            <li>Participated in site inspections, documented field observations, and assisted in monitoring construction progress and permit compliance.</li>
+            <li>Coordinated with engineers, inspectors, clients, and other stakeholders regarding document submissions, permit processing, records, and project requirements.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Image strip (auto infinite scroll; images listed in js/script.js) -->
+      <article class="card" id="image-articles-section">
+        <div id="image-list" class="image-list"></div>
+      </article>
+
+      <!-- Second image strip (moves the opposite way; images listed in js/script.js) -->
+      <article class="card" id="image-articles-section-2">
+        <div id="image-list-2" class="image-list"></div>
+      </article>
+
+      
+<!-- Documentation Blog -->
+<article class="card">
+  <div class="section-title">
+    <h2><strong>Documentation Blog</strong></h2>
+  </div>
+
+  <div class="experience-item">
+    <div class="projects-list">
+
+      <!-- Project 1 -->
+      <div class="project" onclick="openProject(this)" role="button" tabindex="0"
+           onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProject(this)}">
+        <img src="img/project1.jpg" alt="Outstanding Intern Award" class="project-img">
+        <div>
+          <strong class="project-title-centered">Outstanding Intern Award</strong>
+          <div class="meta">
+            <i class="fa-solid fa-globe"></i>
+            Thesis: structural and drainage design —
+            <a href="#" target="_blank" rel="noopener noreferrer"
+               onclick="event.stopPropagation()">view project</a>
+          </div>
+        </div>
+        <div class="project-modal-content" hidden>
+          <h2>Outstanding Intern Award</h2>
+          <img src="img/project1.jpg" alt="Outstanding Intern Award">
+          <p>Award received for exceptional performance and contributions during the internship period.</p>
+          <h3>Key Focus</h3>
+          <p>Project management, documentation, and teamwork.</p>
+          <h3>Project Type</h3>
+          <p>Academic Thesis</p>
+          <a href="#" target="_blank" rel="noopener noreferrer">View Full Project</a>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="project" onclick="openProject(this)" role="button" tabindex="0"
+           onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProject(this)}">
+        <img src="img/project2.jpg" alt="Leadership Competencies" class="project-img">
+        <div>
+          <strong class="project-title-centered">Leadership Competencies</strong>
+          <div class="meta">
+            <i class="fa-solid fa-globe"></i>
+            Leadership development and team management —
+            <a href="#" target="_blank" rel="noopener noreferrer"
+               onclick="event.stopPropagation()">view project</a>
+          </div>
+        </div>
+        <div class="project-modal-content" hidden>
+          <h2>Leadership Competencies</h2>
+          <img src="img/project2.jpg" alt="Leadership Competencies">
+          <p>Appointed as Governor for the School Department.</p>
+          <h3>Tools</h3>
+          <p>STAAD Pro and AutoCAD.</p>
+          <h3>Key Focus</h3>
+          <p>Structural analysis, load considerations, and technical drawing preparation.</p>
+          <a href="#" target="_blank" rel="noopener noreferrer">View Full Project</a>
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="project" onclick="openProject(this)" role="button" tabindex="0"
+           onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProject(this)}">
+        <img src="img/project3.jpg" alt="Courseworks Excellence" class="project-img">
+        <div>
+          <strong class="project-title-centered">Courseworks Excellence</strong>
+          <div class="meta">
+            <i class="fa-solid fa-globe"></i>
+            Revit model and cost estimate —
+            <a href="#" target="_blank" rel="noopener noreferrer"
+               onclick="event.stopPropagation()">view project</a>
+          </div>
+        </div>
+        <div class="project-modal-content" hidden>
+          <h2>Courseworks Excellence</h2>
+          <img src="img/project3.jpg" alt="Courseworks Excellence">
+          <p>A project showcasing excellence in courseworks, including a detailed Revit model and cost estimate.</p>
+          <h3>Tools</h3>
+          <p>Autodesk Revit.</p>
+          <h3>Key Focus</h3>
+          <p>Building visualization, design coordination, and cost planning.</p>
+          <a href="#" target="_blank" rel="noopener noreferrer">View Full Project</a>
+        </div>
+      </div>
+
+      <!-- Project 4 -->
+      <div class="project" onclick="openProject(this)" role="button" tabindex="0"
+           onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProject(this)}">
+        <img src="img/project4.jpg" alt="Life Outside The University" class="project-img">
+        <div>
+          <strong class="project-title-centered">Life Outside The University</strong>
+          <div class="meta">
+            <i class="fa-solid fa-globe"></i>
+            Leadership development, community engagement, and personal growth —
+            <a href="#" target="_blank" rel="noopener noreferrer"
+               onclick="event.stopPropagation()">view project</a>
+          </div>
+        </div>
+        <div class="project-modal-content" hidden>
+          <h2>Life Outside The University</h2>
+          <img src="img/project4.jpg" alt="Life Outside The University">
+          <p>A project showcasing the student's involvement in extracurricular activities and community service.</p>
+          <h3>Key Focus</h3>
+          <p>Leadership development, community engagement, and personal growth.</p>
+          <h3>Project Type</h3>
+          <p>Extracurricular Activity</p>
+          <a href="#" target="_blank" rel="noopener noreferrer">View Full Project</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</article>
+
+    </section>
+
+    <!-- Aside -->
+    <aside>
+
+      <!-- Education -->
+      <article class="card">
+        <div class="section-title"><h2><strong>Education</strong></h2></div>
+        <div class="experience-item">
+          <h3><strong>Bachelor of Science in Civil Engineering</strong></h3>
+          <h3><i>Major in Structural Engineering</i></h3>
+          <p class="experience-text" style="margin-bottom: 6px;"></p>
+          <div class="meta"><i class="fa-regular fa-calendar-days"></i> Aug 2022 – Sept 2026</div>
+        </div>
+      </article>
+
+      <!-- Certifications -->
+      <article class="card">
+        <div class="section-title"><h2><strong>Certifications</strong></h2></div>
+        <div class="experience-item">
+          <h4><strong>Safety Officer 2 (SO2) Certification</strong></h4>
+          <h3><i>Construction Occupational Safety and Health (COSH) Training</i></h3>
+          <p class="experience-text" style="margin-bottom: 6px;"></p>
+          <div class="meta"><i class="fa-regular fa-calendar-days"></i> August 2025</div>
+        </div>
+
+        <div class="experience-item">
+          <h4><strong>Bluebeam</strong></h4>
+          <h3><i>Construction Occupational Safety and Health (COSH) Training</i></h3>
+          <p class="experience-text" style="margin-bottom: 6px;"></p>
+          <div class="meta"><i class="fa-regular fa-calendar-days"></i> August 2026</div>
+        </div>
+      </article>
+
+      <!-- Skills & Tools -->
+      <div class="card">
+        <div class="section-title"><h2><strong>Skills & Tools</strong></h2></div>
+        <div class="stack">
+          <span class="chip"><i class="fa-solid fa-compass-drafting"></i> AutoCAD</span>
+          <span class="chip"><i class="fa-solid fa-users"></i> Google Workspace Apps</span>
+          <span class="chip"><i class="fa-solid fa-users"></i> Microsoft 365 Apps</span>
+          <span class="chip"><i class="fa-solid fa-list-check"></i> Microsoft Project</span>
+          <span class="chip"><i class="fa-solid fa-calculator"></i> Quantity Estimation</span>
+          <span class="chip"><i class="fa-solid fa-helmet-safety"></i> Site Supervision</span>
+          <span class="chip"><i class="fa-solid fa-helmet-safety"></i> Document Control</span>
+          <span class="chip"><i class="fa-solid fa-brain"></i> Problem-Solving</span>
+          <span class="chip"><i class="fa-solid fa-users"></i> Team Collaboration</span>
+        </div>
+      </div>
+
+      <!-- References -->
+      <article class="card">
+        <div class="section-title"><h2><strong>References</strong></h2></div>
+        <div class="experience-item">
+
+          <h><strong>Engr. Ramon P. Villanueva</strong></p></h4>
+            <h3>Professional Civil Engineer - Supervisor</h3>
+            <p class="experience-text" style="margin-bottom: 6px;"></p>  
+            <h3><span><i>(Contact: Available upon request)</i></span></h3>
+
+        </div>
+
+        <div class="experience-item">
+
+            <h3><strong>Engr. Jay-R N. Galwardo</strong></h3>
+            <h3>Professional Civil Engineer - Instructor</h3>
+            <p class="experience-text" style="margin-bottom: 6px;"></p>  
+            <h3><span><i>(Contact: Available upon request)</i></span></h3>
+          
+        </div>
+
+        <div class="experience-item">
+
+          <h3><strong>Engr. Lyan Ruth R. Santiago</strong></h3>
+            <h3>Professional Civil Engineer - Mentor</h3>
+            <p class="experience-text" style="margin-bottom: 6px;"></p>  
+            <h3><span><i>(Contact: Available upon request)</i></span></h3>
+
+        </div>
+      </article>
+
+      <!-- Contact -->
+      <div class="card">
+        <div class="section-title"><h2><strong>Contact</strong></h2></div>
+        <div class="contact-item"><a class="btn" href="tel:09177355407"><i class="fa-solid fa-phone"></i> 0917 735 5407</a></div>
+        <div class="contact-item"><a class="btn" href="mailto:kjfnnatividad@gmail.com"><i class="fa-solid fa-envelope"></i>kjfnnatividad@gmail.com</a></div>
+        <div style="margin-top:12px">
+          <a class="btn" href="https://facebook.com/" target="_blank"><i class="fa-brands fa-facebook"></i> Facebook</a>
+          <a class="btn" href="https://linkedin.com/" target="_blank"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+        </div>
+        <hr style="margin:16px 0;border:none;border-top:1px solid rgba(0,0,0,0.08)"/>
+        <div class="meta"><i class="fa-solid fa-handshake"></i> Available for entry-level roles in structural design, construction, and site engineering.</div>
+      </div>
+
+    </aside>
+  </main>
+
+  <hr />
+
+  <!-- Footer -->
+  <footer>
+    Designed by: Kurisutin 
+    <br>
+    © 2026 Kristine Joy Fontanilla Natividad – All Rights Reserved.
+  </footer>
+</div>
+
+<!-- Floating Messenger Button (edit username) -->
+<a href="https://m.me/your.username" target="_blank" class="floater-messenger">
+  <i class="fa-brands fa-facebook-messenger"></i>
+</a>
+
+<!-- Project Details Modal -->
+<div class="project-modal" id="projectModal" aria-hidden="true">
+  <div class="project-modal-overlay" onclick="closeProject()"></div>
+  <div class="project-modal-box" role="dialog" aria-modal="true"
+       aria-labelledby="projectModalTitle">
+    <button class="project-modal-close" type="button" onclick="closeProject()"
+            aria-label="Close project details">&times;</button>
+    <div id="projectModalBody"></div>
+  </div>
+</div>
+
+<script src="js/script.js"></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Person",
+  "name": "Kristine Joy Fontanilla Natividad",
+  "jobTitle": "Civil Engineer",
+  "url": "https://yourusername.github.io/",
+  "sameAs": ["https://facebook.com/", "https://linkedin.com/"],
+  "alumniOf": { "@type": "CollegeOrUniversity", "name": "Your University" }
+}
+</script>
+
+</body>
+</html>

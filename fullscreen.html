@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Fullscreen View</title>
+  <style>
+    html,body{margin:0;height:100%;background:#000}
+    body{display:flex;align-items:center;justify-content:center}
+    img{max-width:100vw;max-height:100vh;object-fit:contain}
+    a{position:fixed;top:12px;right:20px;color:#fff;font:40px/1 Arial;text-decoration:none}
+  </style>
+</head>
+<body>
+  <a href="index.html" aria-label="Close">&times;</a>
+  <img id="full" alt="Fullscreen image">
+  <script>
+    var src = new URLSearchParams(location.search).get('img');
+    if (src && /^img\/[\w\-. ()\/]+$/.test(src) && src.indexOf('..') === -1) document.getElementById('full').src = src;
+    else location.replace('index.html');
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') location.href = 'index.html'; });
+  </script>
+</body>
+</html>
