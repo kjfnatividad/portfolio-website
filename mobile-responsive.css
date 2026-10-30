@@ -77,9 +77,9 @@ a {
   /* ---- Tweak these to resize the mobile header ---- */
   :root {
     --m-avatar: 108px;     /* profile picture size */
-    --m-name: 0.95rem;     /* name */
+    --m-name: 0.80rem;     /* name */
     --m-loc: 0.65rem;      /* location line */
-    --m-role: 0.75rem;     /* typing line */
+    --m-role: 0.55rem;     /* typing line */
     --m-btn: 0.55rem;      /* Download Resume / Send Email / Light Mode text */
     --m-card-radius: 20px; /* card corner roundness */
   }
