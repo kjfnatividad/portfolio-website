@@ -731,355 +731,110 @@ a {
 }
 
 
-/* MOBILE PROFILE: PHOTO + SAME-HEIGHT TEXT ENCLOSURE */
-@media (max-width: 600px) {
 
+/* MOBILE PROFILE: RESPONSIVE TEXT AND MATCHED WIDTH */
+@media screen and (max-width: 600px) {
+
+  /* Keep the profile row and My Services card aligned */
   .container > header {
     display: grid !important;
-
-    grid-template-columns: 82px minmax(0, 1fr);
-    grid-template-rows: 100px auto;
-    grid-template-areas:
-      "avatar profile"
-      "buttons buttons";
-
-    align-items: stretch;
-    column-gap: 12px;
-    row-gap: 10px;
-
-    width: 100%;
-    box-sizing: border-box;
-    margin: 8px 0 14px;
-    padding: 48px 12px 8px;
-
-    border: none !important;
-    background: transparent !important;
-    text-align: left;
-  }
-
-  /* Remove previous profile enclosure */
-  .container > header::before {
-    content: "" !important;
-    display: block !important;
-
-    grid-area: profile;
-    align-self: stretch;
-    justify-self: stretch;
-
-    width: 100%;
-    height: 100%;
-    min-width: 0;
-
-    border: none !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* Allow individual profile elements to occupy grid cells */
-  .container > header .hero {
-    display: contents !important;
-  }
-
-  /* PROFILE PHOTO */
-  .container > header .avatar {
-    grid-area: avatar;
-
-    align-self: stretch;
-    justify-self: stretch;
-
-    width: 82px !important;
-    min-width: 0 !important;
-    height: 100px !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    overflow: hidden;
-    border-radius: 12px;
-    z-index: 1;
-  }
-
-  .container > header .avatar img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  /* NAME: TOP LINE */
-  .container > header .hero h1 {
-    grid-area: profile;
-    align-self: start;
-    justify-self: stretch;
-
-    display: flex !important;
-    flex-wrap: nowrap !important;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 4px;
-
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-    margin: 0 !important;
-    padding: 5px 0 0 !important;
-
-    font-size: clamp(10px, 3.5vw, 14px) !important;
-    line-height: 1.3 !important;
-    font-weight: 700 !important;
-
-    white-space: nowrap !important;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    z-index: 1;
-  }
-
-  .container > header .hero h1 img {
-    flex: 0 0 auto;
-    width: 13px !important;
-    height: 13px !important;
-  }
-
-  /* LOCATION: MIDDLE LINE */
-  .container > header .sub.location {
-    grid-area: profile;
-    align-self: center;
-    justify-self: stretch;
-
-    display: block;
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    font-size: 11px !important;
-    line-height: 1.3 !important;
-    font-weight: 400 !important;
-
-    white-space: nowrap !important;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    z-index: 1;
-  }
-
-  /* ROLE: BOTTOM LINE */
-  .container > header .sub.role {
-    grid-area: profile;
-    align-self: end;
-    justify-self: stretch;
-
-    display: block;
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-
-    margin: 0 !important;
-    padding: 0 0 5px !important;
-
-    font-size: 11px !important;
-    line-height: 1.3 !important;
-    font-weight: 400 !important;
-    letter-spacing: normal !important;
-
-    white-space: nowrap !important;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    z-index: 1;
-  }
-
-  .container > header .sub.role * {
-    font-size: 11px !important;
-    line-height: 1.3 !important;
-    font-weight: 400 !important;
-    letter-spacing: normal !important;
-    white-space: nowrap !important;
-  }
-
-  /* THREE BUTTONS BELOW PHOTO AND TEXT */
-  .container > header .badges {
-    grid-area: buttons;
-
-    display: flex !important;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 8px !important;
-
-    width: 100%;
-    min-width: 0;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  .container > header .badges .btn {
-    display: inline-flex;
-    flex: 0 1 auto;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-
-    min-width: 0;
-    max-width: 100%;
-    min-height: 36px;
-
-    margin: 0;
-    padding: 8px 10px !important;
-    box-sizing: border-box;
-
-    font-size: 11px !important;
-    line-height: 1.3 !important;
-    white-space: nowrap !important;
-  }
-
-  /* THEME TOGGLE */
-  .container > header #darkToggle {
-    position: absolute !important;
-    top: 5px !important;
-    right: 10px !important;
-    left: auto !important;
-    z-index: 5 !important;
-  }
-}
-
-/* SMALLER MOBILE SCREENS */
-@media (max-width: 380px) {
-
-  .container > header {
-    grid-template-columns: 70px minmax(0, 1fr);
-    grid-template-rows: 88px auto;
-    column-gap: 10px;
-    padding-left: 8px;
-    padding-right: 8px;
-  }
-
-  .container > header .avatar {
-    width: 70px !important;
-    height: 88px !important;
-  }
-
-  .container > header .hero h1 {
-    font-size: 11px !important;
-  }
-
-  .container > header .hero h1 img {
-    width: 11px !important;
-    height: 11px !important;
-  }
-
-  .container > header .sub.location,
-  .container > header .sub.role,
-  .container > header .sub.role * {
-    font-size: 10px !important;
-  }
-
-  .container > header .badges {
-    gap: 6px !important;
-  }
-
-  .container > header .badges .btn {
-    padding: 7px 8px !important;
-    font-size: 10px !important;
-  }
-}
-
-
-/* MOBILE: MATCH PROFILE ROW WIDTH TO MY SERVICES CARD */
-@media (max-width: 600px) {
-
-  /* Use My Services card as the width reference */
-  .container > main > section.allcard > article.card:first-child {
     width: 100% !important;
-    max-width: none !important;
-    box-sizing: border-box;
-  }
+    box-sizing: border-box !important;
 
-  /* Header must have exactly the same available outer width */
-  .container > header {
-    display: grid !important;
-
-    width: 100% !important;
-    max-width: none !important;
-    box-sizing: border-box;
-
-    /* Photo stays 82px; enclosure takes all remaining width */
     grid-template-columns: 82px minmax(0, 1fr) !important;
     grid-template-rows: 100px auto !important;
-
     grid-template-areas:
       "avatar profile"
       "buttons buttons";
 
     column-gap: 12px !important;
     row-gap: 10px !important;
-
-    /* Remove horizontal padding so header aligns with My Services */
     padding-left: 0 !important;
     padding-right: 0 !important;
-
     margin-left: 0 !important;
     margin-right: 0 !important;
   }
 
-  /* Keep profile photo unchanged */
+  /* Keep the photo size unchanged */
   .container > header .avatar {
     grid-area: avatar;
     width: 82px !important;
-    height: 100px !important;
     min-width: 82px !important;
     max-width: 82px !important;
-    box-sizing: border-box;
+    height: 100px !important;
+    box-sizing: border-box !important;
   }
 
-  /* Text enclosure fills the remaining width */
+  /* Invisible text enclosure fills the remaining width */
   .container > header::before {
-    grid-area: profile;
-    display: block !important;
     content: "" !important;
-
+    display: block !important;
+    grid-area: profile;
     width: 100% !important;
     height: 100% !important;
-    min-width: 0;
-
     border: none !important;
     background: transparent !important;
     pointer-events: none;
   }
 
-  /* All profile text stays within the calculated enclosure */
-  .container > header .hero h1,
-  .container > header .sub.location,
-  .container > header .sub.role {
-    grid-area: profile;
+  /* Name: smoothly adjust across portrait and landscape */
+  .container > header .hero h1 {
+    font-size: clamp(14px, 3.8vw, 20px) !important;
+    line-height: 1.2 !important;
+    min-width: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
-    min-width: 0 !important;
-    box-sizing: border-box;
-    overflow: hidden;
     white-space: nowrap !important;
-    text-overflow: ellipsis;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    box-sizing: border-box !important;
   }
 
-  /* Buttons remain below the photo and text */
+  /* Location: consistent, readable sizing */
+  .container > header .sub.location {
+    font-size: clamp(11px, 2.8vw, 14px) !important;
+    line-height: 1.3 !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Role */
+  .container > header .sub.role {
+    font-size: clamp(11px, 2.8vw, 14px) !important;
+    line-height: 1.3 !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Buttons remain below the profile row */
   .container > header .badges {
     grid-area: buttons;
     width: 100% !important;
     max-width: 100% !important;
-    box-sizing: border-box;
+    box-sizing: border-box !important;
     margin-top: 0 !important;
+  }
+
+  /* My Services card uses the same available width */
+  .container > main > section.allcard > article.card:first-child {
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
   }
 }
 
-/* Preserve the existing smaller-phone photo size */
-@media (max-width: 380px) {
-
+/* Small phones: preserve the existing photo dimensions */
+@media screen and (max-width: 380px) {
   .container > header {
     grid-template-columns: 70px minmax(0, 1fr) !important;
     grid-template-rows: 88px auto !important;
