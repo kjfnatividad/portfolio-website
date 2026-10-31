@@ -77,10 +77,10 @@ a {
 @media (max-width: 600px) {
   /* ---- Tweak these to resize the mobile header ---- */
   :root {
-    --m-avatar: 90px;      /* profile picture size */
-    --m-gap: 14px;         /* space between picture and text */
+    --m-avatar: 80px;      /* profile picture size */
+    --m-gap: 10px;         /* space between picture and text */
     --m-pad: 28px;         /* left/right page padding */
-    --m-name: 0.95rem;     /* max name size */
+    --m-name: 1.14rem;     /* max name size */
     --m-loc: 0.65rem;      /* max location size */
     --m-role: 0.75rem;     /* max role line size */
     --m-btn: 0.6rem;       /* max button / Light Mode text size */
@@ -138,7 +138,7 @@ a {
     gap: 6px;
     min-width: 0;
     white-space: nowrap;
-    font-size: clamp(0.55rem, calc(var(--m-hero) / 20), var(--m-name)) !important;
+    font-size: clamp(0.66rem, calc(var(--m-hero) / 19.6), var(--m-name)) !important;
     line-height: 1.25 !important;
     letter-spacing: -0.02em;
     text-align: left;
@@ -466,8 +466,8 @@ a {
 /* Small phones */
 @media (max-width: 380px) {
   :root {
-    --m-avatar: 80px;
-    --m-gap: 12px;
+    --m-avatar: 72px;
+    --m-gap: 10px;
     --m-pad: 20px;
   }
 
