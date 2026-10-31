@@ -1,7 +1,6 @@
 /* fit-header.js
-   Makes the NAME (+ blue check), LOCATION and ROLE lines exactly as long as the
-   buttons row (Download Resume -> Call Me) on phones, in portrait and landscape.
-   The buttons row is the reference and is never changed.
+   Fits the NAME (+ blue check), LOCATION and ROLE lines to the combined
+   buttons width on phones, in portrait and landscape.
    Load it AFTER js/script.js:  <script src="js/fit-header.js"></script> */
 (function () {
   var PHONE = window.matchMedia(
@@ -13,18 +12,19 @@
   var loc     = q(".container > header .sub.location");
   var role    = q(".container > header .sub.role");
   var badges  = q(".container > header .badges");
-  if (!h1 || !loc || !role || !badges) return;
+  var details = q(".container > header .profile-details");
+  if (!h1 || !loc || !role || !badges || !details) return;
+  var buttons = Array.prototype.slice.call(badges.querySelectorAll(".btn"));
+  var rootStyle = document.documentElement.style;
 
-  /* Width of the buttons row: left edge of the first visible pill to the
-     right edge of the last visible pill. */
+  /* The button row fills the text column and is the shared line-width reference. */
   function targetWidth() {
-    var btns = Array.prototype.filter.call(
-      badges.querySelectorAll(".btn"),
-      function (b) { return b.offsetParent !== null; }
-    );
-    if (!btns.length) return 0;
-    return btns[btns.length - 1].getBoundingClientRect().right -
-           btns[0].getBoundingClientRect().left;
+    var visibleButtons = buttons.filter(function (button) {
+      return button.offsetParent !== null;
+    });
+    if (!visibleButtons.length) return badges.clientWidth;
+    return visibleButtons[visibleButtons.length - 1].getBoundingClientRect().right -
+      visibleButtons[0].getBoundingClientRect().left;
   }
 
   /* One-line width of an element, measured on an invisible copy.
@@ -32,12 +32,13 @@
   function naturalWidth(el, prepare) {
     var c = el.cloneNode(true);
     c.removeAttribute("id");
-    c.style.position = "absolute";
-    c.style.visibility = "hidden";
-    c.style.left = "-9999px";
-    c.style.width = "max-content";
-    c.style.maxWidth = "none";
-    c.style.whiteSpace = "nowrap";
+    c.style.setProperty("position", "absolute", "important");
+    c.style.setProperty("visibility", "hidden", "important");
+    c.style.setProperty("left", "-9999px", "important");
+    c.style.setProperty("width", "max-content", "important");
+    c.style.setProperty("max-width", "none", "important");
+    c.style.setProperty("white-space", "nowrap", "important");
+    c.style.setProperty("flex", "none", "important");
     if (prepare) prepare(c);
     el.parentNode.appendChild(c);
     var w = c.getBoundingClientRect().width;
@@ -45,7 +46,7 @@
     return w;
   }
 
-  /* Change the font size until the line is exactly `target` px long.
+  /* Match each text line to the same width, growing or shrinking as needed.
      `fixed` = part of the line that does not scale with the font (the check icon). */
   function fit(el, target, fixed, prepare) {
     el.style.removeProperty("font-size");
@@ -53,8 +54,8 @@
       var fs = parseFloat(getComputedStyle(el).fontSize);
       var w = naturalWidth(el, prepare);
       var scalable = w - fixed;
-      if (scalable <= 0 || Math.abs(w - target) < 0.2) return;
-      var next = fs * (target - fixed) / scalable;
+      if (scalable <= 0 || target <= fixed || Math.abs(w - target) < 0.5) return;
+      var next = Math.max(6, fs * (target - fixed) / scalable);
       el.style.setProperty("font-size", next.toFixed(3) + "px", "important");
     }
   }
@@ -62,15 +63,17 @@
   function fullRole(c) {
     var t = c.querySelector(".typing");
     var full = null;
-    try { if (typeof text === "string") full = text; } catch (e) {}
+    try { if (typeof typingText === "string") full = typingText; } catch (e) {}
     if (t && full) t.textContent = full;
   }
 
   function apply() {
     if (!PHONE.matches) {
+      rootStyle.removeProperty("--profile-photo-height");
       [h1, loc, role].forEach(function (el) { el.style.removeProperty("font-size"); });
       return;
     }
+    rootStyle.removeProperty("--profile-photo-height");
     var target = targetWidth();
     if (!target) return;
 
@@ -81,6 +84,18 @@
     fit(h1, target, fixedH1);
     fit(loc, target, 0);
     fit(role, target, 0, fullRole);
+
+    var textHeight = h1.getBoundingClientRect().height +
+      loc.getBoundingClientRect().height +
+      role.getBoundingClientRect().height +
+      (parseFloat(getComputedStyle(details).gap) || 0) * 2;
+    var neededHeight = Math.ceil(textHeight + badges.getBoundingClientRect().height);
+    var baseHeight = parseFloat(
+      getComputedStyle(document.documentElement).getPropertyValue("--profile-photo-height")
+    ) || 0;
+    if (neededHeight > baseHeight) {
+      rootStyle.setProperty("--profile-photo-height", neededHeight + "px");
+    }
   }
 
   var queued = false;
