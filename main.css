@@ -142,9 +142,13 @@ aside li { margin-bottom: 6px; }
   border: 1px solid var(--btn-border);
   border-radius: 50%;
   color: var(--muted);
+  list-style: none;
+  appearance: none;
   text-decoration: none;
   transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
 }
+.contact-icon::before,
+.contact-icon::after { content: none; }
 .contact-icon:hover,
 .contact-icon:focus-visible { background: var(--gradient); color: #fff; outline: none; }
 .contact-icon:hover { transform: translateY(-2px); }
