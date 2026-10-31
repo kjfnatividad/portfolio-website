@@ -180,6 +180,13 @@ a {
     text-align: left;
   }
 
+  .sub.role, .sub.role span {
+    font-size: 6px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
   /* Download Resume + Send Email + Call Me: ONE line, under the role */
   .container > header .badges {
     display: flex;
