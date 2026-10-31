@@ -160,24 +160,24 @@ a {
     height: 14px !important;
   }
 
-  /* Location */
-  .container > header .sub.location {
-    margin-top: 5px;
-    font-size: var(--m-sub) !important;
-    line-height: 1.4 !important;
-    text-align: left;
-  }
+/* Location (unchanged) */
+.container > header .sub.location {
+  margin-top: 5px;
+  font-size: var(--m-sub) !important;
+  line-height: 1.4 !important;
+  text-align: left;
+}
 
-  /* Role / typing line: same size as the location, ONE line, just under it */
-  .container > header .sub.role {
-    margin-top: 8px;
-    min-height: 1.4em;
-    white-space: nowrap;
-    font-size: var(--m-sub) !important;
-    font-weight: 400;
-    line-height: 1.4 !important;
-    text-align: left;
-  }
+/* Role: ONE line, just under the location, SAME LENGTH as the location */
+.container > header .sub.role {
+  margin-top: 8px;
+  min-height: 1.4em;
+  white-space: nowrap;
+  font-size: calc(var(--m-sub) * 0.828) !important;
+  font-weight: 400;
+  line-height: 1.4 !important;
+  text-align: left;
+}
 
   /* Download Resume + Send Email + Call Me: ONE line, under the role */
   .container > header .badges {
