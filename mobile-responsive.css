@@ -503,3 +503,14 @@ a {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Mobile fix: match the role text size to the location */
+@media (max-width: 600px) {
+  .container > header .sub.location,
+  .container > header .sub.role {
+    font-size: 0.88rem !important;
+    line-height: 1.45 !important;
+    font-weight: 400;
+  }
+}
+
