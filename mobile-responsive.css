@@ -1030,18 +1030,27 @@ a {
     align-items: center !important;
     justify-content: center !important;
 
+    gap: 1px !important;
     min-width: 0 !important;
     max-width: none !important;
     min-height: 28px !important;
     margin: 0 !important;
-    padding: 3px 2px !important;
+    padding: 3px 0 !important;
 
     font-size: inherit !important;
     line-height: 1.05 !important;
-    white-space: normal !important;
+    white-space: nowrap !important;
     overflow: hidden !important;
     text-align: center !important;
     box-sizing: border-box !important;
+  }
+
+  .container > header .badges .btn.primary {
+    flex-grow: 1.7 !important;
+  }
+
+  .container > header .badges .btn:nth-child(2) {
+    flex-grow: 1.2 !important;
   }
 
   .container > header .badges .btn i {
