@@ -46,16 +46,17 @@
     return w;
   }
 
-  /* Match each text line to the same width, growing or shrinking as needed.
+  /* Fit a text line to its share of the button-row width.
      `fixed` = part of the line that does not scale with the font (the check icon). */
-  function fit(el, target, fixed, prepare) {
+  function fit(el, target, fixed, prepare, scale) {
     el.style.removeProperty("font-size");
+    var desiredWidth = target * (scale || 1);
     for (var i = 0; i < 5; i++) {
       var fs = parseFloat(getComputedStyle(el).fontSize);
       var w = naturalWidth(el, prepare);
       var scalable = w - fixed;
-      if (scalable <= 0 || target <= fixed || Math.abs(w - target) < 0.5) return;
-      var next = Math.max(6, fs * (target - fixed) / scalable);
+      if (scalable <= 0 || desiredWidth <= fixed || Math.abs(w - desiredWidth) < 0.5) return;
+      var next = Math.max(6, fs * (desiredWidth - fixed) / scalable);
       el.style.setProperty("font-size", next.toFixed(3) + "px", "important");
     }
   }
@@ -82,8 +83,8 @@
     var fixedH1 = (img ? img.getBoundingClientRect().width : 0) + (img ? gap : 0);
 
     fit(h1, target, fixedH1);
-    fit(loc, target, 0);
-    fit(role, target, 0, fullRole);
+    fit(loc, target, 0, null, 0.9);
+    fit(role, target, 0, fullRole, 0.95);
 
     var textHeight = h1.getBoundingClientRect().height +
       loc.getBoundingClientRect().height +
