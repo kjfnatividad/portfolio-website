@@ -90,7 +90,11 @@
       loc.getBoundingClientRect().height +
       role.getBoundingClientRect().height +
       (parseFloat(getComputedStyle(details).gap) || 0) * 2;
-    var neededHeight = Math.ceil(textHeight + badges.getBoundingClientRect().height);
+    var locationSpacing = parseFloat(getComputedStyle(loc).marginTop) || 0;
+    var roleSpacing = 4;
+    var neededHeight = Math.ceil(
+      textHeight + locationSpacing + roleSpacing * 2 + badges.getBoundingClientRect().height
+    );
     var baseHeight = parseFloat(
       getComputedStyle(document.documentElement).getPropertyValue("--profile-photo-height")
     ) || 0;
