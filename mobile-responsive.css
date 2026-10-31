@@ -159,9 +159,11 @@ a {
     height: 14px !important;
   }
 
-  /* Location: same length as the buttons row */
+  /* Location: same length as the buttons row
+     (js/fit-header.js sets the exact size; the multipliers below are the fallback) */
   .container > header .sub.location {
     margin-top: 5px;
+    white-space: nowrap;
     font-size: calc(var(--m-unit) * 1.33) !important;
     line-height: 1.4 !important;
     text-align: left;
