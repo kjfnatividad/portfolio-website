@@ -8,9 +8,9 @@
 
    Mobile layout:
    - Profile photo on the left
-   - Name + verification icon, location, and role on the right
-   - Three buttons underneath the profile row
-   - Invisible profile text enclosure
+   - Name + verification icon, location, and role grouped on the right
+   - Three buttons beneath the text enclosure, beside the photo
+   - Text enclosure and buttons share the photo's height
    - Profile row width matches the My Services card
    - Responsive typography for portrait and landscape
    - Dark-mode toggle at the top-right
@@ -763,8 +763,8 @@ a {
 @media screen and (max-width: 380px) {
 
   :root {
-    --profile-photo-width: 70px;
-    --profile-photo-height: 88px;
+    --profile-photo-width: 84px;
+    --profile-photo-height: 102px;
     --profile-gap: 10px;
 
     --profile-name-size: clamp(11px, 3.1vw, 13px);
@@ -819,8 +819,8 @@ a {
 /* =========================================================
    RESPONSIVE MOBILE PROFILE
    - Photo on the left
-   - Invisible text enclosure on the right
-   - Text uses the same width and wraps without ellipses
+   - Text enclosure and buttons on the right
+   - Text fits on single lines inside the available enclosure
    - Responsive in portrait and landscape
    - Desktop layout remains unchanged
    ========================================================= */
@@ -829,24 +829,22 @@ a {
        screen and (orientation: landscape) and (max-height: 500px) {
 
   :root {
-    --profile-photo-width: 82px;
-    --profile-photo-height: 100px;
+    --profile-photo-width: 100px;
+    --profile-photo-height: 122px;
     --profile-gap: 12px;
-    --profile-text-width: minmax(0, 1fr);
   }
 
   /* Header and profile enclosure */
   .container > header {
     display: grid !important;
     grid-template-columns:
-      var(--profile-photo-width) var(--profile-text-width) !important;
-    grid-template-rows: auto auto !important;
-    grid-template-areas:
-      "avatar profile"
-      "buttons buttons" !important;
+      var(--profile-photo-width)
+      minmax(0, calc(100% - var(--profile-photo-width) - var(--profile-gap))) !important;
+    grid-template-rows: var(--profile-photo-height) !important;
+    grid-template-areas: "avatar profile" !important;
 
     column-gap: var(--profile-gap) !important;
-    row-gap: 12px !important;
+    row-gap: 0 !important;
     align-items: start !important;
 
     width: 100% !important;
@@ -885,32 +883,41 @@ a {
     object-fit: cover !important;
   }
 
-  /* Make the hero content a child of the grid */
+  /* The right column contains the text enclosure and buttons */
   .container > header .hero {
-    display: contents !important;
-  }
-
-  /* Invisible enclosure for the three text lines */
-  .container > header::before {
-    content: "" !important;
     display: block !important;
     grid-area: profile !important;
+    width: 100% !important;
+    height: var(--profile-photo-height) !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .container > header .profile-info {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
 
     width: 100% !important;
-    height: 100% !important;
+    height: var(--profile-photo-height) !important;
     min-width: 0 !important;
-    min-height: var(--profile-photo-height) !important;
+    box-sizing: border-box !important;
+  }
 
-    border: none !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-    pointer-events: none !important;
+  .container > header .profile-details {
+    flex: 1 1 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    gap: 2px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
   }
 
   /* Name */
   .container > header .hero h1 {
-    grid-area: profile !important;
-    align-self: start !important;
+    flex: 0 0 auto !important;
     position: relative !important;
     z-index: 1 !important;
 
@@ -921,16 +928,14 @@ a {
     margin: 0 !important;
     padding: 0 !important;
 
-    font-size: clamp(11px, 2.7vw, 16px) !important;
+    font-size: clamp(9px, 2.7vw, 16px) !important;
     line-height: 1.25 !important;
     letter-spacing: -0.02em !important;
     font-weight: 700 !important;
 
-    white-space: normal !important;
-    overflow: visible !important;
-    overflow-wrap: anywhere !important;
-    word-break: normal !important;
-    text-overflow: clip !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
     box-sizing: border-box !important;
     text-align: left !important;
   }
@@ -946,8 +951,7 @@ a {
 
   /* Location: same width as the name and role */
   .container > header .sub.location {
-    grid-area: profile !important;
-    align-self: center !important;
+    flex: 0 0 auto !important;
     position: relative !important;
     z-index: 1 !important;
 
@@ -962,19 +966,16 @@ a {
     line-height: 1.35 !important;
     font-weight: 400 !important;
 
-    white-space: normal !important;
-    overflow: visible !important;
-    overflow-wrap: anywhere !important;
-    word-break: normal !important;
-    text-overflow: clip !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
     box-sizing: border-box !important;
     text-align: left !important;
   }
 
   /* Role: same width and text alignment */
   .container > header .sub.role {
-    grid-area: profile !important;
-    align-self: end !important;
+    flex: 0 0 auto !important;
     position: relative !important;
     z-index: 1 !important;
 
@@ -990,11 +991,9 @@ a {
     line-height: 1.35 !important;
     font-weight: 400 !important;
 
-    white-space: normal !important;
-    overflow: visible !important;
-    overflow-wrap: anywhere !important;
-    word-break: normal !important;
-    text-overflow: clip !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
     box-sizing: border-box !important;
     text-align: left !important;
   }
@@ -1002,44 +1001,56 @@ a {
   .container > header .sub.role * {
     max-width: 100% !important;
     white-space: inherit !important;
-    overflow-wrap: anywhere !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 
-  /* Buttons below the entire profile row */
+  /* Keep the buttons on one line beneath the text enclosure */
   .container > header .badges {
-    grid-area: buttons !important;
-
+    flex: 0 0 auto !important;
+    grid-area: auto !important;
     display: flex !important;
-    flex-wrap: wrap !important;
+    flex-wrap: nowrap !important;
     align-items: center !important;
-    justify-content: flex-start !important;
-    gap: 6px !important;
+    justify-content: space-between !important;
+    gap: 3px !important;
 
     width: 100% !important;
     min-width: 0 !important;
     max-width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
+    font-size: clamp(7px, 2vw, 10px) !important;
     box-sizing: border-box !important;
   }
 
   .container > header .badges .btn {
     display: inline-flex !important;
-    flex: 0 1 auto !important;
+    flex: 1 1 0 !important;
     align-items: center !important;
     justify-content: center !important;
 
     min-width: 0 !important;
-    max-width: 100% !important;
-    min-height: 34px !important;
+    max-width: none !important;
+    min-height: 28px !important;
     margin: 0 !important;
-    padding: 7px 9px !important;
+    padding: 3px 2px !important;
 
-    font-size: clamp(10px, 2.1vw, 12px) !important;
-    line-height: 1.35 !important;
+    font-size: inherit !important;
+    line-height: 1.05 !important;
     white-space: normal !important;
+    overflow: hidden !important;
     text-align: center !important;
     box-sizing: border-box !important;
+  }
+
+  .container > header .badges .btn i {
+    flex: 0 0 auto !important;
+    font-size: 1em !important;
+  }
+
+  .container > header .badges .btn:hover {
+    transform: none !important;
   }
 
   .container > header .badges a[href^="tel:"] {
@@ -1067,13 +1078,17 @@ a {
     max-width: 100% !important;
     box-sizing: border-box !important;
   }
+
+  .container > main {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
 }
 
 /* Extra-small phones */
 @media screen and (max-width: 380px) {
   :root {
-    --profile-photo-width: 70px;
-    --profile-photo-height: 88px;
+    --profile-photo-width: 84px;
+    --profile-photo-height: 102px;
     --profile-gap: 10px;
   }
 
