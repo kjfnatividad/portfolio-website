@@ -989,3 +989,107 @@ a {
     font-size: 10px !important;
   }
 }
+
+
+/* MOBILE: MATCH PROFILE ROW WIDTH TO MY SERVICES CARD */
+@media (max-width: 600px) {
+
+  /* Use My Services card as the width reference */
+  .container > main > section.allcard > article.card:first-child {
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box;
+  }
+
+  /* Header must have exactly the same available outer width */
+  .container > header {
+    display: grid !important;
+
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box;
+
+    /* Photo stays 82px; enclosure takes all remaining width */
+    grid-template-columns: 82px minmax(0, 1fr) !important;
+    grid-template-rows: 100px auto !important;
+
+    grid-template-areas:
+      "avatar profile"
+      "buttons buttons";
+
+    column-gap: 12px !important;
+    row-gap: 10px !important;
+
+    /* Remove horizontal padding so header aligns with My Services */
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* Keep profile photo unchanged */
+  .container > header .avatar {
+    grid-area: avatar;
+    width: 82px !important;
+    height: 100px !important;
+    min-width: 82px !important;
+    max-width: 82px !important;
+    box-sizing: border-box;
+  }
+
+  /* Text enclosure fills the remaining width */
+  .container > header::before {
+    grid-area: profile;
+    display: block !important;
+    content: "" !important;
+
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 0;
+
+    border: none !important;
+    background: transparent !important;
+    pointer-events: none;
+  }
+
+  /* All profile text stays within the calculated enclosure */
+  .container > header .hero h1,
+  .container > header .sub.location,
+  .container > header .sub.role {
+    grid-area: profile;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+    overflow: hidden;
+    white-space: nowrap !important;
+    text-overflow: ellipsis;
+  }
+
+  /* Buttons remain below the photo and text */
+  .container > header .badges {
+    grid-area: buttons;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+    margin-top: 0 !important;
+  }
+}
+
+/* Preserve the existing smaller-phone photo size */
+@media (max-width: 380px) {
+
+  .container > header {
+    grid-template-columns: 70px minmax(0, 1fr) !important;
+    grid-template-rows: 88px auto !important;
+    column-gap: 10px !important;
+  }
+
+  .container > header .avatar {
+    width: 70px !important;
+    min-width: 70px !important;
+    max-width: 70px !important;
+    height: 88px !important;
+  }
+}
