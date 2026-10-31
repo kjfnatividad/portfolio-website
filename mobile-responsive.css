@@ -74,19 +74,27 @@ a {
   }
 }
 
-@media (max-width: 600px) {
-  /* ---- Tweak these to resize the mobile header ---- */
+/* ===== PHONE HEADER: portrait AND landscape ===== */
+@media (max-width: 600px), (orientation: landscape) and (max-height: 500px) {
+  /* ---- Tweak these to resize the phone header ---- */
   :root {
-    --m-avatar: 80px;      /* profile picture size */
+    /* Reference width = the phone's SHORT side, so portrait and landscape
+       give exactly the same header. */
+    --m-ref: min(100vw, 100vh);
+    --m-pad: clamp(20px, calc(var(--m-ref) * 0.072), 28px);     /* page side padding */
+    --m-avatar: clamp(72px, calc(var(--m-ref) * 0.195), 80px);  /* profile picture */
     --m-gap: 10px;         /* space between picture and text */
-    --m-pad: 28px;         /* left/right page padding */
     --m-name: 1.14rem;     /* max name size */
     --m-loc: 0.65rem;      /* max location size */
     --m-role: 0.75rem;     /* max role line size */
     --m-btn: 0.6rem;       /* max button / Light Mode text size */
     --m-card-radius: 20px; /* card corner roundness */
     /* width left for the text column; all one-line texts scale to fit it */
-    --m-hero: calc(100vw - 2 * var(--m-pad) - var(--m-avatar) - var(--m-gap));
+    --m-hero: calc(var(--m-ref) - 2 * var(--m-pad) - var(--m-avatar) - var(--m-gap));
+  }
+
+  @supports (height: 100lvh) {
+    :root { --m-ref: min(100vw, 100lvh); }
   }
 
   .container {
@@ -101,6 +109,7 @@ a {
     column-gap: var(--m-gap);
     align-items: center;
     width: 100%;
+    max-width: calc(var(--m-ref) - 2 * var(--m-pad));
     margin: 0 0 10px;
     padding: 0;
     text-align: left;
@@ -138,9 +147,7 @@ a {
     gap: 6px;
     min-width: 0;
     white-space: nowrap;
-    h1 {
-  font-size: clamp(0.66rem, calc(var(--m-hero) / 17.5), 14.53px) !important;
-}
+    font-size: clamp(0.66rem, calc(var(--m-hero) / 19.6), var(--m-name)) !important;
     line-height: 1.25 !important;
     letter-spacing: -0.02em;
     text-align: left;
@@ -165,7 +172,7 @@ a {
     margin-top: 8px;
     min-height: 1.4em;
     white-space: nowrap;
-    font-size: clamp(0.5rem, calc(var(--m-hero) / 24), var(--m-role)) !important;
+    font-size: clamp(0.45rem, calc(var(--m-hero) / 29), var(--m-role)) !important;
     font-weight: 400;
     line-height: 1.4 !important;
     text-align: left;
@@ -220,7 +227,10 @@ a {
     background: var(--bg);
     box-shadow: none;
   }
+}
 
+/* ===== Everything else on phones in portrait ===== */
+@media (max-width: 600px) {
   hr {
     margin: 22px 0;
     margin-top: 24px;
@@ -467,12 +477,6 @@ a {
 
 /* Small phones */
 @media (max-width: 380px) {
-  :root {
-    --m-avatar: 72px;
-    --m-gap: 10px;
-    --m-pad: 20px;
-  }
-
   .card {
     padding: 16px;
   }
