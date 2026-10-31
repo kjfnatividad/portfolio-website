@@ -977,6 +977,10 @@ a {
     text-align: left !important;
   }
 
+  .container > header .sub.location {
+    margin-top: 4px !important;
+  }
+
   /* Center the role in the remaining space above the buttons */
   .container > header .sub.role {
     flex: 0 0 auto !important;
