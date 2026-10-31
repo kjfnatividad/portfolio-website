@@ -163,7 +163,7 @@ a {
 /* Location (unchanged) */
 .container > header .sub.location {
   margin-top: 5px;
-  font-size: var(--m-sub) !important;
+  font-size: calc(var(--m-sub) * 1) !important;
   line-height: 1.4 !important;
   text-align: left;
 }
@@ -173,7 +173,7 @@ a {
   margin-top: 8px;
   min-height: 1.4em;
   white-space: nowrap;
-  font-size: calc(var(--m-sub) * 0.828) !important;
+  font-size: calc(var(--m-sub) * 1) !important;
   font-weight: 400;
   line-height: 1.4 !important;
   text-align: left;
