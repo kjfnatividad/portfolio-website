@@ -909,7 +909,7 @@ a {
     display: flex !important;
     flex-direction: column !important;
     justify-content: flex-start !important;
-    gap: 2px !important;
+    gap: 0 !important;
     min-width: 0 !important;
     min-height: 0 !important;
     overflow: hidden !important;
@@ -949,7 +949,7 @@ a {
     object-fit: contain !important;
   }
 
-  /* Location: same width as the name and role */
+  /* Location text is slightly smaller than the fitted name */
   .container > header .sub.location {
     flex: 0 0 auto !important;
     position: relative !important;
@@ -973,7 +973,7 @@ a {
     text-align: left !important;
   }
 
-  /* Role: same width and text alignment */
+  /* Center the role in the remaining space above the buttons */
   .container > header .sub.role {
     flex: 0 0 auto !important;
     position: relative !important;
@@ -984,7 +984,9 @@ a {
     min-width: 0 !important;
     max-width: 100% !important;
     min-height: 0 !important;
-    margin: 0 !important;
+    margin: 0 auto !important;
+    margin-top: auto !important;
+    margin-bottom: auto !important;
     padding: 0 !important;
 
     font-size: clamp(10px, 2.3vw, 13px) !important;
