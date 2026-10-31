@@ -131,28 +131,32 @@ aside li { margin-bottom: 6px; }
 .contact-item a[href^="tel"] { margin-top: 8px; display: inline-block; }
 
 /* Contact icon links */
-.contact-links { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 12px; }
-.contact-icon {
+.contact-links {
+  display: grid;
+  grid-template-columns: repeat(4, 44px);
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+.contact-links > a.contact-icon {
   display: flex;
   width: 44px;
   height: 44px;
-  flex: 0 0 44px;
   align-items: center;
   justify-content: center;
   border: 1px solid var(--btn-border);
   border-radius: 50%;
   color: var(--muted);
   list-style: none;
-  appearance: none;
   text-decoration: none;
   transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
 }
-.contact-icon::before,
-.contact-icon::after { content: none; }
-.contact-icon:hover,
-.contact-icon:focus-visible { background: var(--gradient); color: #fff; outline: none; }
-.contact-icon:hover { transform: translateY(-2px); }
-.contact-icon i { color: inherit; }
+.contact-links > a.contact-icon::before,
+.contact-links > a.contact-icon::after { content: none; }
+.contact-links > a.contact-icon:hover,
+.contact-links > a.contact-icon:focus-visible { background: var(--gradient); color: #fff; outline: none; }
+.contact-links > a.contact-icon:hover { transform: translateY(-2px); }
+.contact-links > a.contact-icon i { color: inherit; }
 
 /* Footer */
 footer { margin-top: 40px; color: var(--muted); font-size: 13px; text-align: center; animation: fadeIn 2s ease; line-height: 1.7; }
