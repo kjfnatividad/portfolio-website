@@ -84,14 +84,13 @@ a {
     --m-pad: clamp(20px, calc(var(--m-ref) * 0.072), 28px);     /* page side padding */
     --m-avatar: clamp(72px, calc(var(--m-ref) * 0.195), 80px);  /* profile picture */
     --m-gap: 10px;         /* space between picture and text */
-    --m-name: 1.14rem;     /* max name size */
-    --m-loc: 0.65rem;      /* max size of the location AND role lines */
-    --m-btn: 0.6rem;       /* max button / Light Mode text size */
+    --m-btn: 0.6rem;       /* max size of the buttons (the buttons LEAD every other line) */
     --m-card-radius: 20px; /* card corner roundness */
     /* width left for the text column; all one-line texts scale to fit it */
     --m-hero: calc(var(--m-ref) - 2 * var(--m-pad) - var(--m-avatar) - var(--m-gap));
-    /* ONE size shared by the location line and the role line */
-    --m-sub: clamp(0.5rem, calc(var(--m-hero) / 24), var(--m-loc));
+    /* Button text size = the reference. The name, location and role lines are
+       multiples of it, so all four lines end at the same right edge. */
+    --m-unit: clamp(0.45rem, calc(var(--m-hero) / 29), var(--m-btn));
   }
 
   @supports (height: 100lvh) {
@@ -140,7 +139,7 @@ a {
     text-align: left;
   }
 
-  /* Name + blue check: ONE line */
+  /* Name + blue check: ONE line, same length as the buttons row */
   .container > header .hero h1 {
     display: flex;
     align-items: center;
@@ -148,7 +147,7 @@ a {
     gap: 6px;
     min-width: 0;
     white-space: nowrap;
-    font-size: clamp(0.66rem, calc(var(--m-hero) / 19.6), var(--m-name)) !important;
+    font-size: calc(var(--m-unit) * 1.52) !important;
     line-height: 1.25 !important;
     letter-spacing: -0.02em;
     text-align: left;
@@ -160,24 +159,24 @@ a {
     height: 14px !important;
   }
 
-/* Location (unchanged) */
-.container > header .sub.location {
-  margin-top: 5px;
-  font-size: calc(var(--m-sub) * 1) !important;
-  line-height: 1.4 !important;
-  text-align: left;
-}
+  /* Location: same length as the buttons row */
+  .container > header .sub.location {
+    margin-top: 5px;
+    font-size: calc(var(--m-unit) * 1.33) !important;
+    line-height: 1.4 !important;
+    text-align: left;
+  }
 
-/* Role: ONE line, just under the location, SAME LENGTH as the location */
-.container > header .sub.role {
-  margin-top: 8px;
-  min-height: 1.4em;
-  white-space: nowrap;
-  font-size: calc(var(--m-sub) * 1) !important;
-  font-weight: 400;
-  line-height: 1.4 !important;
-  text-align: left;
-}
+  /* Role / typing line: ONE line, just under the location, same length as the buttons row */
+  .container > header .sub.role {
+    margin-top: 8px;
+    min-height: 1.4em;
+    white-space: nowrap;
+    font-size: calc(var(--m-unit) * 1.1) !important;
+    font-weight: 400;
+    line-height: 1.4 !important;
+    text-align: left;
+  }
 
   /* Download Resume + Send Email + Call Me: ONE line, under the role */
   .container > header .badges {
@@ -186,7 +185,7 @@ a {
     justify-content: flex-start;
     gap: 0.5em !important;
     margin-top: 10px;
-    font-size: clamp(0.45rem, calc(var(--m-hero) / 29), var(--m-btn));
+    font-size: var(--m-unit);
   }
 
   /* Pill buttons (sizes in em so they shrink together with the font) */
