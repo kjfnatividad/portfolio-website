@@ -850,3 +850,265 @@ a {
   }
 }
 
+
+/* =====================================================
+   UNIFIED MOBILE PROFILE HEADER
+   Responsive text, unchanged photo dimensions,
+   and total width aligned with the My Services card.
+   ===================================================== */
+
+@media screen and (max-width: 600px) {
+
+  :root {
+    --profile-photo-width: 82px;
+    --profile-photo-height: 100px;
+    --profile-gap: 12px;
+  }
+
+  /* Header width matches the content width of My Services */
+  .container > header {
+    display: grid !important;
+    grid-template-columns:
+      var(--profile-photo-width) minmax(0, 1fr) !important;
+    grid-template-rows:
+      var(--profile-photo-height) auto !important;
+    grid-template-areas:
+      "avatar profile"
+      "buttons buttons";
+
+    gap: 10px var(--profile-gap) !important;
+    align-items: center !important;
+    align-content: start !important;
+
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+
+    margin: 23px 0 14px !important;
+    padding: 0 !important;
+
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    text-align: left !important;
+  }
+
+  /* Photo stays at its specified dimensions */
+  .container > header .avatar {
+    grid-area: avatar;
+    align-self: center !important;
+
+    width: var(--profile-photo-width) !important;
+    min-width: var(--profile-photo-width) !important;
+    max-width: var(--profile-photo-width) !important;
+    height: var(--profile-photo-height) !important;
+
+    margin: 0 !important;
+    overflow: hidden !important;
+    border-radius: 12px !important;
+    box-sizing: border-box !important;
+  }
+
+  .container > header .avatar img {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+  }
+
+  /* Let the name, location and role occupy the text column */
+  .container > header .hero {
+    display: contents !important;
+  }
+
+  /* Invisible enclosure occupies the remaining grid column */
+  .container > header::before {
+    content: "" !important;
+    display: block !important;
+    grid-area: profile;
+    align-self: stretch;
+    width: 100% !important;
+    min-width: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    pointer-events: none;
+  }
+
+  /* Name and verification icon */
+  .container > header .hero h1 {
+    grid-area: profile;
+    align-self: start !important;
+    position: relative;
+    z-index: 1;
+
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    gap: 4px !important;
+
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+
+    font-size: clamp(12px, 2.7vw, 17px) !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.02em !important;
+
+    text-align: left !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  .container > header .hero h1 img {
+    flex: 0 0 auto !important;
+    width: 13px !important;
+    height: 13px !important;
+    object-fit: contain;
+  }
+
+  /* Location sits below the name */
+  .container > header .sub.location {
+    grid-area: profile;
+    align-self: center !important;
+    position: relative;
+    z-index: 1;
+
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+
+    font-size: clamp(11px, 2.2vw, 14px) !important;
+    line-height: 1.35 !important;
+    font-weight: 400 !important;
+
+    text-align: left !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Role sits below the location */
+  .container > header .sub.role {
+    grid-area: profile;
+    align-self: end !important;
+    position: relative;
+    z-index: 1;
+
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+
+    font-size: clamp(11px, 2.2vw, 14px) !important;
+    line-height: 1.35 !important;
+    font-weight: 400 !important;
+
+    text-align: left !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Buttons remain below the profile row */
+  .container > header .badges {
+    grid-area: buttons;
+
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 6px !important;
+
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+
+    font-size: clamp(10px, 2.1vw, 13px) !important;
+    box-sizing: border-box !important;
+  }
+
+  .container > header .badges .btn {
+    display: inline-flex !important;
+    flex: 0 1 auto !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    min-width: 0 !important;
+    max-width: 100% !important;
+    min-height: 32px !important;
+    margin: 0 !important;
+    padding: 7px 9px !important;
+
+    font-size: 1em !important;
+    line-height: 1.3 !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
+  }
+
+  .container > header .badges a[href^="tel:"] {
+    display: inline-flex !important;
+  }
+
+  /* Theme toggle stays in the top-right corner */
+  #darkToggle {
+    position: fixed !important;
+    top: 11px !important;
+    right: 14px !important;
+    left: auto !important;
+    z-index: 10000 !important;
+
+    min-height: 0 !important;
+    padding: 4px 9px !important;
+    font-size: 11px !important;
+    line-height: 1.4 !important;
+    border-radius: 999px !important;
+  }
+
+  /* My Services card shares the same available outer width */
+  .container > main > section.allcard > article.card:first-child {
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* Extra-small phones */
+@media screen and (max-width: 380px) {
+  :root {
+    --profile-photo-width: 70px;
+    --profile-photo-height: 88px;
+    --profile-gap: 10px;
+  }
+
+  .container > header .hero h1 {
+    font-size: clamp(11px, 3.1vw, 13px) !important;
+  }
+
+  .container > header .hero h1 img {
+    width: 12px !important;
+    height: 12px !important;
+  }
+
+  .container > header .badges {
+    gap: 4px !important;
+  }
+
+  .container > header .badges .btn {
+    padding: 6px 7px !important;
+    font-size: 10px !important;
+  }
+}
