@@ -85,12 +85,13 @@ a {
     --m-avatar: clamp(72px, calc(var(--m-ref) * 0.195), 80px);  /* profile picture */
     --m-gap: 10px;         /* space between picture and text */
     --m-name: 1.14rem;     /* max name size */
-    --m-loc: 0.65rem;      /* max location size */
-    --m-role: 0.75rem;     /* max role line size */
+    --m-loc: 0.65rem;      /* max size of the location AND role lines */
     --m-btn: 0.6rem;       /* max button / Light Mode text size */
     --m-card-radius: 20px; /* card corner roundness */
     /* width left for the text column; all one-line texts scale to fit it */
     --m-hero: calc(var(--m-ref) - 2 * var(--m-pad) - var(--m-avatar) - var(--m-gap));
+    /* ONE size shared by the location line and the role line */
+    --m-sub: clamp(0.5rem, calc(var(--m-hero) / 24), var(--m-loc));
   }
 
   @supports (height: 100lvh) {
@@ -162,17 +163,17 @@ a {
   /* Location */
   .container > header .sub.location {
     margin-top: 5px;
-    font-size: clamp(0.5rem, calc(var(--m-hero) / 24), var(--m-loc)) !important;
+    font-size: var(--m-sub) !important;
     line-height: 1.4 !important;
     text-align: left;
   }
 
-  /* Role / typing line: ONE line, just under the location */
+  /* Role / typing line: same size as the location, ONE line, just under it */
   .container > header .sub.role {
     margin-top: 8px;
     min-height: 1.4em;
     white-space: nowrap;
-    font-size: clamp(0.5rem, calc(var(--m-hero) / 24), var(--m-role)) !important;
+    font-size: var(--m-sub) !important;
     font-weight: 400;
     line-height: 1.4 !important;
     text-align: left;
