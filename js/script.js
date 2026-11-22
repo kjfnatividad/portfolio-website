@@ -10,7 +10,7 @@ if (toggle) {
 }
 
 /* ---------- Typing effect ---------- */
-const typingText = "ivil Engineer · Construction Administrative Assistant";
+const typingText = "ivil Engineer · Major in Structural Engineering";
 const typingSpan = document.querySelector(".sub.role .typing");
 let typingIndex = 0;
 function typeWriter() {
